@@ -1,0 +1,79 @@
+image:
+  registry: '150219881234'
+  repository: 150219881234/tibbwce
+  tag: savingaccountservice_v2
+appName: savingaccountservice
+deploymentAnnotations:
+  techOwner: biman.bisws@cognizant.com,barun.roy@cognizant.com
+  sourceCodeRepo: https://github.com/amitmohanty15feb1988/SavingsAccountService
+  buildno: build-01
+customLabels:
+  app: savingaccountservice
+  tier: middleware
+  environment: DEV
+  projectId: prj-001
+  costCenter: cs-001
+updateStrategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 25%
+    maxUnavailable: 25%
+ports:
+- containerPort: 8080
+  name: application
+  protocol: TCP
+- containerPort: 8090
+  name: monitoring
+  protocol: TCP
+- containerPort: 9095
+  name: prometheus
+  protocol: TCP
+replicaCount: 1
+resources:
+  requests:
+    memory: '612'
+    cpu: '60'
+  limits:
+    memory: '2024'
+    cpu: '600'
+livenessProbe:
+  initialDelaySeconds: 120
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 5
+  successThreshold: 1
+  httpGet:
+    path: /savings-account/v2/savings-account/savings-account-fulfillment-arrangement/behavior-qualifiers
+    port: 8080
+    scheme: HTTP
+    httpHeaders:
+    - name: Authorization
+      value: Basic YWRtaW46c2VjcmV0
+readinessProbe:
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  timeoutSeconds: 3
+  failureThreshold: 1
+  successThreshold: 5
+  httpGet:
+    path: /savings-account/v2/savings-account/savings-account-fulfillment-arrangement/behavior-qualifiers
+    port: 8080
+    scheme: HTTP
+    httpHeaders:
+    - name: Authorization
+      value: Basic YWRtaW46c2VjcmV0
+service:
+  type: LoadBalancer
+  nodePorts:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: application
+  - port: 8090
+    targetPort: 8090
+    protocol: TCP
+    name: monitoring
+  - port: 9095
+    targetPort: 9095
+    protocol: TCP
+    name: prometheus
