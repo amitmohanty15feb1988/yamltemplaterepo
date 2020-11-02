@@ -1,6 +1,6 @@
 image:
   registry: '150219881234'
-  repository: 150219881234/tibbwce
+  repository: 150219881234/tibbwceems
   tag: savingaccountservice_v2
 appName: savingaccountservice
 deploymentAnnotations:
