@@ -44,7 +44,7 @@ livenessProbe:
   successThreshold: 1
   httpGet:
     path: /savings-account/v2/savings-account/savings-account-fulfillment-arrangement/behavior-qualifiers
-    port: 7777
+    port: 8080
     scheme: HTTP
     httpHeaders:
     - name: Authorization
@@ -57,7 +57,7 @@ readinessProbe:
   successThreshold: 5
   httpGet:
     path: /savings-account/v2/savings-account/savings-account-fulfillment-arrangement/behavior-qualifiers
-    port: 7777
+    port: 8080
     scheme: HTTP
     httpHeaders:
     - name: Authorization
